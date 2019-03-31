@@ -1,14 +1,19 @@
 {
   "name": "clicker",
+  "homepage" : "http://github.com/RyanCRickert/ButtonWar",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.16.4",
+    "firebase": "^5.9.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "webpack": "4.28.3"
   },
   "scripts": {
     "start": "react-scripts start",
+    "build-web": "webpack",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -21,5 +26,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "webpack-cli": "^3.3.0"
+  }
 }
