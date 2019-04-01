@@ -28,9 +28,11 @@ class App extends Component {
     let currentTotal = undefined;
     let currentUser = undefined;
     database.ref("total").once("value", snapshot => currentTotal = snapshot.val().totalClicks)
-    database.ref(`users/${this.state.userID}`).once("value", snapshot => currentUser = snapshot.val().userClicks)
     database.ref("total").set({ totalClicks: currentTotal + 1})
-    database.ref(`users/${this.state.userID}`).set({ userClicks: currentUser + 1})
+    if(this.state.loggedIn) {
+      database.ref(`users/${this.state.userID}`).once("value", snapshot => currentUser = snapshot.val().userClicks)
+      database.ref(`users/${this.state.userID}`).set({ userClicks: currentUser + 1})
+    }
   }
 
   componentDidMount() {
@@ -58,7 +60,15 @@ class App extends Component {
         }
         );
       } else {
-        this.setState(() => ({ loggedIn: false, userID : undefined }));
+        this.setState(() => ({ loggedIn: false, userID : undefined }),
+          () => {
+            database.ref("total").on("value", (snapshot) => {
+              this.setState({
+                totalClicks: snapshot.val().totalClicks
+              })
+            })
+          }
+        );
       }
     })
   }
