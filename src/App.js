@@ -25,13 +25,15 @@ class App extends Component {
   }
 
   handleButtonIncrease() {
-    let currentTotal = undefined;
-    let currentUser = undefined;
-    database.ref("total").once("value", snapshot => currentTotal = snapshot.val().totalClicks)
-    database.ref("total").set({ totalClicks: currentTotal + 1})
-    if(this.state.loggedIn) {
-      database.ref(`users/${this.state.userID}`).once("value", snapshot => currentUser = snapshot.val().userClicks)
-      database.ref(`users/${this.state.userID}`).set({ userClicks: currentUser + 1})
+    if(!isNaN(this.state.totalClicks)) {
+      let currentTotal = undefined;
+      let currentUser = undefined;
+      database.ref("total").once("value", snapshot => currentTotal = snapshot.val().totalClicks)
+      database.ref("total").set({ totalClicks: currentTotal + 1})
+      if(this.state.loggedIn) {
+        database.ref(`users/${this.state.userID}`).once("value", snapshot => currentUser = snapshot.val().userClicks)
+        database.ref(`users/${this.state.userID}`).set({ userClicks: currentUser + 1})
+      }
     }
   }
 
