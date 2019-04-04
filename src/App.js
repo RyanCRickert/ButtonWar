@@ -25,15 +25,13 @@ class App extends Component {
   }
 
   handleButtonIncrease() {
-    if(!isNaN(this.state.totalClicks)) {
-      let currentTotal = undefined;
-      let currentUser = undefined;
-      database.ref("total").once("value", snapshot => currentTotal = snapshot.val().totalClicks)
-      database.ref("total").set({ totalClicks: currentTotal + 1})
-      if(this.state.loggedIn) {
-        database.ref(`users/${this.state.userID}`).once("value", snapshot => currentUser = snapshot.val().userClicks)
-        database.ref(`users/${this.state.userID}`).set({ userClicks: currentUser + 1})
-      }
+    let currentTotal = undefined;
+    let currentUser = undefined;
+    database.ref("total").once("value", snapshot => currentTotal = snapshot.val().totalClicks)
+    database.ref("total").set({ totalClicks: currentTotal + 1})
+    if(this.state.loggedIn) {
+      database.ref(`users/${this.state.userID}`).once("value", snapshot => currentUser = snapshot.val().userClicks)
+      database.ref(`users/${this.state.userID}`).set({ userClicks: currentUser + 1})
     }
   }
 
@@ -93,7 +91,7 @@ class App extends Component {
         <div className="App-body">
           <div className="App-total-clicks">The button has been clicked a total of {this.state.totalClicks} {this.state.totalClicks === 1 ? "time" : "times"}!</div>
           {!this.state.loggedIn ? this.renderLogin() : this.renderLogout()}
-          <button onClick={this.handleButtonIncrease} className="App-button">Click Here!</button>
+          <button disabled={isNaN(this.state.totalClicks)} onClick={this.handleButtonIncrease} className="App-button">Click Here!</button>
           {this.state.loggedIn ? <div className="App-user-clicks">You have clicked the button {this.state.userClicks} {this.state.userClicks === 1 ? "time" : "times"}!</div> : <div className="App-user-clicks">If you would like to keep track of your clicks, log into your Google account!</div>}
         </div>
       </div>
