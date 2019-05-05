@@ -1,4 +1,5 @@
 .App {
+  touch-action: none;
   text-align: center;
 }
 
