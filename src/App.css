@@ -1,5 +1,8 @@
-.App {
+* {
   touch-action: none;
+}
+
+.App {
   text-align: center;
 }
 
@@ -20,6 +23,7 @@
   color: white;
   font-size: 18px;
   height: 50px;
+  touch-action: none;
   user-select: none;
   width: 125px;
 }
